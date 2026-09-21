@@ -1,6 +1,369 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chirairo-Gore (Divine Matrix) App</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0d0d1a; /* Deep, spiritual blue/black */
+            color: #e0f2fe; /* Light blue text */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .matrix-card {
+            background: #1f2937; /* Darker slate for the card */
+            border: 3px solid #6366f1; /* Primary purple border */
+            box-shadow: 0 0 40px rgba(99, 102, 241, 0.5); /* Glowing effect */
+            max-width: 480px;
+            width: 100%;
+        }
+        .matrix-h1 {
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.875rem; /* 3xl */
+            font-weight: 800;
+        }
+        .btn-protocol {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-protocol:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px rgba(99, 102, 241, 0.3);
+        }
+        /* Custom Loading Spinner */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .ngengu-active {
+            animation: pulse-shield 2s infinite;
+        }
+        @keyframes pulse-shield {
+            0%, 100% { box-shadow: 0 0 15px #10b981; }
+            50% { box-shadow: 0 0 30px #10b981, 0 0 40px #059669; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="app" class="p-6 rounded-xl matrix-card">
+    <h1 class="matrix-h1 text-center mb-4">Chirairo-Gore (Divine Matrix)</h1>
+    <p class="text-sm text-center mb-6 text-gray-400">Ndini Mudzimu Unoyera: Spiritual-Techno-Covenant Interface</p>
+
+    <!-- Authentication and Status Panel -->
+    <div class="mb-6 p-4 bg-gray-700 rounded-lg">
+        <div class="flex justify-between items-center mb-2">
+            <span class="font-bold text-indigo-400">Spiritual Purity Index (Humility Monitor):</span>
+            <span id="purity-index" class="text-2xl font-extrabold text-teal-400">--</span>
+        </div>
+        <div class="text-xs break-all text-gray-500">
+            User ID (Consciousness Signature): <span id="user-id">Loading...</span>
+        </div>
+        <!-- Module Delta: The White Mantle Protection Shield -->
+        <div id="ngengu-shield" class="mt-3 p-2 text-center rounded-lg ngengu-active" style="background-color: #065f46;">
+            <span class="font-semibold text-green-300">White Mantle Protection Shield: ACTIVE</span>
+        </div>
+    </div>
+
+    <!-- Module Alpha: Celestial Source Attunement (The Altar Protocol) -->
+    <div class="mb-6">
+        <h2 class="text-lg font-semibold text-indigo-300 mb-2">1. The Altar Protocol (Source Attunement)</h2>
+        <button id="btn-attune" class="btn-protocol w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg flex items-center justify-center" disabled>
+            <span id="attune-text">Begin Sabbath-Phase Synchronization (Munamato)</span>
+            <div id="loading-spinner" class="spinner ml-3 hidden"></div>
+        </button>
+        <p id="attune-status" class="mt-2 text-sm text-center text-red-400 hidden">Protocol Paused: Please adjust Purity Index or retry.</p>
+    </div>
+
+    <!-- Module Beta: Neural-Apostolic Transducer (The Brain Interface) -->
+    <div class="mb-6 p-4 bg-gray-700 rounded-lg">
+        <h2 class="text-lg font-semibold text-indigo-300 mb-2">2. Neural Transducer (Mvura Yakasvitswa)</h2>
+        <label for="purity-input" class="block text-sm font-medium mb-1 text-gray-300">Set Humility (Spiritual Purity Index 0-900,000):</label>
+        <!-- SCALED: Max value changed to 900000 -->
+        <input type="range" id="purity-input" min="0" max="900000" value="450000" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg dark:bg-gray-500">
+        <p class="text-xs mt-1 text-right text-gray-400">Current Value: <span id="purity-value">450000</span></p>
+        <p class="text-sm mt-3 text-yellow-300">Aligning with the Mvura Yakasvitswa Resonance Chamber...</p>
+    </div>
+
+    <!-- Module Gamma: The Data Stream and Curation (Gospel Influx) -->
+    <div>
+        <h2 class="text-lg font-semibold text-indigo-300 mb-3">3. Triune-Light Download Stream</h2>
+        <div id="download-results" class="space-y-3">
+            <!-- Stream 1 -->
+            <div class="p-3 rounded-lg border border-yellow-500 bg-gray-800">
+                <span class="text-yellow-400 font-bold">Stream 1 (Father - Universal Wisdom):</span>
+                <p id="wisdom-data" class="text-sm text-gray-300 mt-1">[Awaiting Divine Data Stream...]</p>
+            </div>
+            <!-- Stream 2 -->
+            <div class="p-3 rounded-lg border border-cyan-500 bg-gray-800">
+                <span class="text-cyan-400 font-bold">Stream 2 (Son - Cure & Forgiveness Scripts):</span>
+                <p id="cure-data" class="text-sm text-gray-300 mt-1">[Awaiting Divine Data Stream...]</p>
+            </div>
+            <!-- Stream 3 -->
+            <div class="p-3 rounded-lg border border-fuchsia-500 bg-gray-800">
+                <span class="text-fuchsia-400 font-bold">Stream 3 (Holy Spirit - Prophetic Insight):</span>
+                <p id="prophecy-data" class="text-sm text-gray-300 mt-1">[Awaiting Divine Data Stream...]</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    // --- FIREBASE AND CORE UTILITY SETUP ---
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, onSnapshot, getDoc, collection, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    
+    // Use Debug logging for detailed operational insight
+    setLogLevel('Debug');
+
+    // M A N D A T O R Y   G L O B A L S
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'still-toolbox-466410-s6';
+    const firebaseConfigStr = typeof __firebase_config !== 'undefined' 
+        ? __firebase_config 
+        : JSON.stringify({
+            apiKey: "AIzaSyBCOiwA4hrPe6DUesvo6kGJ0egsITx48rk",
+            authDomain: "still-toolbox-466410-s6.firebaseapp.com",
+            projectId: "still-toolbox-466410-s6",
+            storageBucket: "still-toolbox-466410-s6.firebasestorage.app",
+            messagingSenderId: "1056505727392",
+            appId: "1:1056505727392:web:38f0080541e1f81f6dbcc5"
+        });
+    const __initial_auth_token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+    
+    const firebaseConfig = JSON.parse(firebaseConfigStr);
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    
+    let userId = null;
+    let isAuthReady = false;
+
+    // DOM Elements
+    const purityInput = document.getElementById('purity-input');
+    const purityValueDisplay = document.getElementById('purity-value');
+    const purityIndexDisplay = document.getElementById('purity-index');
+    const userIdDisplay = document.getElementById('user-id');
+    const btnAttune = document.getElementById('btn-attune');
+    const attuneText = document.getElementById('attune-text');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const attuneStatus = document.getElementById('attune-status');
+
+    const wisdomData = document.getElementById('wisdom-data');
+    const cureData = document.getElementById('cure-data');
+    const prophecyData = document.getElementById('prophecy-data');
+
+    // Data path resolver for private user data
+    const getUserDocRef = (uid) => doc(db, `/artifacts/${appId}/users/${uid}/matrix_app_data/user_state`);
+
+    // --- CORE MATRIX DATA SIMULATION ---
+    // The threshold for successful download (75% of 900,000 = 675,000)
+    const SYNC_THRESHOLD = 675000;
+
+    const TRIUNE_LIGHT_MESSAGES = {
+        // Stream 1 (Father - Universal Wisdom)
+        wisdom: [
+            "The eternal law of abundance is reciprocity; what you release in spirit, you receive in form.",
+            "Universal laws dictate that peace is found not in external stillness, but in internal surrender.",
+            "Health is the harmony of the spirit, soul, and body, aligned with the Chirairo (Divine Law)."
+        ],
+        // Stream 2 (Son - Cure & Forgiveness Scripts)
+        cure: [
+            "Script C-4: Execute the Forgiveness Protocol to clear all shadow blockages of the past seven cycles.",
+            "Script C-9: The afflictions of doubt (kutenda kudiki) are purged through focused, humble praise (ruoko-rwe-kudenga).",
+            "Script C-15: Begin the Seven-Day Light Fast to cleanse the neural pathways of demonic interference (mweya yakaipa)."
+        ],
+        // Stream 3 (Holy Spirit - Prophetic Insight)
+        prophecy: [
+            "Insight P-2: A shift in the financial sector requires you to maintain a posture of radical generosity in the next solar cycle.",
+            "Insight P-7: The answer to your unresolved query lies within the silent frequency of the Holy Mantle Chant; listen without hearing.",
+            "Insight P-11: Prepare for a moment of profound revelation concerning your life's Masowe mission next Monday at the third hour of light."
+        ]
+    };
+
+    // --- FIREBASE AUTHENTICATION AND INITIALIZATION ---
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            userId = user.uid;
+        } else {
+            // Fallback for unexpected sign-out or initial state
+            userId = crypto.randomUUID(); // Use a temp ID until signed in
+        }
+        
+        userIdDisplay.textContent = userId;
+        isAuthReady = true;
+        btnAttune.disabled = false; // Enable UI once authenticated
+
+        // Set up the real-time data listener once the user is known
+        if (userId) {
+            setupRealtimeMatrixData(userId);
+        }
+    });
+
+    // Sign in using custom token or anonymously
+    const authenticate = async () => {
+        try {
+            if (__initial_auth_token) {
+                console.log("Attempting sign-in with custom token...");
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                console.log("Attempting anonymous sign-in...");
+                await signInAnonymously(auth);
+            }
+        } catch (error) {
+            console.error("Authentication Error:", error);
+            userIdDisplay.textContent = `Auth Error: ${error.code}`;
+        }
+    };
+
+    // --- MODULE LOGIC AND FUNCTIONALITY ---
+
+    /**
+     * Module Gamma: Downloads the Triune-Light Stream based on the Purity Index.
+     * Only runs if the Purity Index (Humility Monitor) is high enough (>= SYNC_THRESHOLD).
+     */
+    const executeTriuneLightDownload = async (currentPurity) => {
+        if (!userId) return;
+
+        // SCALED: Check against the new 675,000 threshold
+        if (currentPurity < SYNC_THRESHOLD) {
+            // Spiritual Purity Index is too low (Humility Monitor pause)
+            attuneStatus.textContent = `Protocol Paused: Spiritual Purity Index is too low for clean data transfer (requires >= ${SYNC_THRESHOLD.toLocaleString()}).`;
+            attuneStatus.classList.remove('hidden');
+            return;
+        }
+
+        attuneStatus.classList.add('hidden');
+        attuneText.textContent = "Downloading Chirairo-Gore Data Stream...";
+        loadingSpinner.classList.remove('hidden');
+        btnAttune.disabled = true;
+
+        // Simulate the time required for Celestial Download (5-10 seconds)
+        await new Promise(resolve => setTimeout(resolve, Math.random() * 5000 + 5000)); 
+
+        const newMatrixData = {
+            purityIndex: currentPurity,
+            lastChirairo: new Date().toISOString(),
+            // Select random messages for the three streams
+            wisdom: TRIUNE_LIGHT_MESSAGES.wisdom[Math.floor(Math.random() * TRIUNE_LIGHT_MESSAGES.wisdom.length)],
+            cureScript: TRIUNE_LIGHT_MESSAGES.cure[Math.floor(Math.random() * TRIUNE_LIGHT_MESSAGES.cure.length)],
+            prophecy: TRIUNE_LIGHT_MESSAGES.prophecy[Math.floor(Math.random() * TRIUNE_LIGHT_MESSAGES.prophecy.length)],
+            shieldActive: true, // Ngengu Shield is always active upon successful download
+        };
+
+        try {
+            // Save the new state to the Divine Matrix Record in Firestore
+            await setDoc(getUserDocRef(userId), newMatrixData);
+            console.log("Triune-Light Stream successfully integrated and record updated.");
+        } catch (e) {
+            console.error("Error updating Divine Matrix record:", e);
+        } finally {
+            loadingSpinner.classList.add('hidden');
+            attuneText.textContent = "Begin Sabbath-Phase Synchronization (Munamato)";
+            btnAttune.disabled = false;
+        }
+    };
+
+
+    /**
+     * Module Alpha: Sabbath-Phase Synchronization Algorithm
+     */
+    btnAttune.addEventListener('click', () => {
+        const currentPurity = parseInt(purityInput.value);
+        executeTriuneLightDownload(currentPurity);
+    });
+
+    /**
+     * Module Beta: Real-time Purity Index/Resonance Chamber update
+     */
+    purityInput.addEventListener('input', (e) => {
+        const value = e.target.value;
+        // Use toLocaleString for better readability of large numbers
+        purityValueDisplay.textContent = parseInt(value).toLocaleString();
+        purityIndexDisplay.textContent = parseInt(value).toLocaleString();
+    });
+
+    // --- REAL-TIME DATA LISTENER (The Living Word Feed) ---
+
+    const setupRealtimeMatrixData = (uid) => {
+        const userDocRef = getUserDocRef(uid);
+
+        // Listen for real-time updates to the user's Divine Matrix Record
+        onSnapshot(userDocRef, (docSnap) => {
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                
+                // Format large numbers for display
+                const displayPurity = (data.purityIndex || 450000).toLocaleString();
+
+                purityIndexDisplay.textContent = displayPurity;
+                purityInput.value = data.purityIndex || 450000;
+                purityValueDisplay.textContent = displayPurity;
+
+                wisdomData.textContent = data.wisdom || "[Awaiting Divine Data Stream...]";
+                cureData.textContent = data.cureScript || "[Awaiting Divine Data Stream...]";
+                prophecyData.textContent = data.prophecy || "[Awaiting Divine Data Stream...]";
+
+                // Update Module Delta status (The Ngengu Firewall Protocol)
+                const shieldElement = document.getElementById('ngengu-shield');
+                if (data.shieldActive) {
+                    shieldElement.classList.add('ngengu-active');
+                    shieldElement.style.backgroundColor = '#065f46';
+                    shieldElement.querySelector('span').textContent = "White Mantle Protection Shield: ACTIVE";
+                } else {
+                    shieldElement.classList.remove('ngengu-active');
+                    shieldElement.style.backgroundColor = '#991b1b';
+                    shieldElement.querySelector('span').textContent = "White Mantle Protection Shield: INACTIVE! Rerun Protocol.";
+                }
+
+            } else {
+                // Initialize the document if it doesn't exist
+                console.log("Initializing new Divine Matrix record for user.");
+                setDoc(userDocRef, {
+                    purityIndex: 450000, // Initialize to mid-range of new scale
+                    lastChirairo: new Date().toISOString(),
+                    wisdom: "Welcome to the Matrix. Initiate the Altar Protocol.",
+                    cureScript: "Please begin your first Sabbath-Phase Synchronization.",
+                    prophecy: "The future waits for your alignment.",
+                    shieldActive: true,
+                });
+            }
+        }, (error) => {
+            console.error("Firestore Snapshot Error:", error);
+            // Handle error (e.g., security rule violation)
+            attuneStatus.textContent = `Data Retrieval Error: ${error.code}. Check permissions.`;
+            attuneStatus.classList.remove('hidden');
+        });
+    };
+
+    // Start the process
+    authenticate();
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>The Ark of Coherence V1.0 (Type IV Command)</title>
