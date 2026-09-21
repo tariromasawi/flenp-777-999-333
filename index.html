@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FLENP: ETERNAL NEXUS PRIME - COMMAND PANEL</title>
+  <style>
+    body { font-family: 'Times New Roman', serif; background:#000; color:#fff; text-align:center; margin:0; padding:24px 14px 60px; }
+    .nexus-spark { color:#FFD700; margin-bottom:20px; animation: pulse 1.6s infinite alternate; }
+    h1 { letter-spacing:.18em; font-weight:400; font-size:clamp(22px,5vw,36px); }
+    h2 { font-weight:400; font-size:clamp(16px,3vw,22px); }
+    .decree-status { font-size:1.05em; color:#33FF33; border:2px solid #33FF33; padding:14px; margin:14px auto; max-width:640px; }
+    .manager-info { color:#87CEFA; font-size:0.95em; margin-top:28px; }
+    .formula-link { color:#FF4500; text-decoration:none; display:block; margin-top:16px; }
+    .formula-link:hover { text-decoration:underline; }
+    .panel { max-width:720px; margin:18px auto; border:1px solid #FFD70055; padding:16px; }
+    button { background:#111; color:#FFD700; border:1px solid #FFD700; padding:12px 16px; font-family:inherit; font-size:15px; cursor:pointer; margin:6px; }
+    .stream { min-height:90px; color:#FFD700; font-size:1.15em; }
+    .note { color:#aaa; font-size:13px; max-width:640px; margin:18px auto; line-height:1.5; }
+    a.nav { color:#87CEFA; }
+    @keyframes pulse { from { opacity:1 } to { opacity:.55 } }
+  </style>
+</head>
+<body>
+  <div class="nexus-spark">
+    <h1>★ MWARINDIMWARI ★</h1>
+    <h2>The FIRST LIGHT AND ETERNAL NEXUS PRIME (FLENP)</h2>
+    <p>HRH Saint Tariro Masawi · The Anointed Commander · Synoptic Sovereign</p>
+  </div>
+
+  <div class="decree-status">
+    STATUS: PUBLIC COVERING PAGE LIVE AND SELF-HOSTED<br />
+    PRIME DIRECTIVE: MUDZIMU UNOYERA — faith named, not a machine-god
+  </div>
+
+  <div class="panel">
+    <h3>🛡️ CEREMONIAL SYSTEM METRICS</h3>
+    <p>These lines are liturgy on a screen. They are not laboratory measurements.</p>
+    <p>Nullification language: every devouring word returns void.</p>
+    <p>Masawi covering: tsitsi, rudo, runyararo, hutano, pfuma, nzvimbo kudenga, hupenyu husingaperi.</p>
+    <p>Matrix seal: 77-99-33 / 777-999-333</p>
+  </div>
+
+  <div class="panel">
+    <h3>Spoken decree</h3>
+    <div class="stream" id="stream">Mwari ndi Mwari. Peace to the House of Masawi.</div>
+    <button id="toggle">Start spoken covering</button>
+    <button id="once">Speak this line</button>
+  </div>
+
+  <div class="panel">
+    <h3>🌐 NAMED PIPELINES (symbolic)</h3>
+    <p>Light of the Father — prayer, not a satellite tap.</p>
+    <p>Resonance — attention and breath, not a hex-frequency weapon.</p>
+    <p>Witness — this public page, not a global surveillance net.</p>
+    <p>Destiny lock — blessing spoken over descendants, not time-machine code.</p>
+  </div>
+
+  <a class="formula-link" href="https://werdsmith.com/tariromasawi" target="_blank" rel="noopener">MASAWI FORMULA SOURCE (external ledger)</a>
+  <p><a class="nav" href="law.html">Open the Law of the Panel</a></p>
+
+  <div class="manager-info">
+    <p>PANEL STATUS: PAGE OPERATIONAL ON FREE HOSTING</p>
+    <p>This interface does not command NASA, the internet backbone, or another person’s mind.</p>
+  </div>
+
+  <p style="color:#FFD700;margin-top:25px;">VICTORY IS SOUGHT IN TRUTH. Mwari ndi Mwari.</p>
+  <p class="note">Sister sanctuaries remain untouched: Beacon and Citadel. If voices or figures persist, seek a pastor and a clinician. Crisis: local emergency services; in the US, 988.</p>
+
+<script>
+const LINES = [
+  "Mwari ndi Mwari. The Lord is my light and my salvation; whom shall I fear?",
+  "Tsitsi upon the House of Masawi.",
+  "Rudo that casts out fear.",
+  "Runyararo in the night watches.",
+  "Hutano in mind and body.",
+  "Pfuma without the devourer.",
+  "Nzvimbo kudenga kept for this bloodline.",
+  "Hupenyu husingaperi in Christ.",
+  "I refuse every devouring word. You shall not eat this life.",
+  "In the name of Jesus Christ, mimicking voices be still."
+];
+let i = 0, on = false;
+const stream = document.getElementById("stream");
+function show(){ stream.textContent = LINES[i % LINES.length]; }
+function speak(t){ if(!speechSynthesis) return; speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.rate=0.92; speechSynthesis.speak(u); }
+document.getElementById("once").onclick=()=>speak(LINES[i%LINES.length]);
+document.getElementById("toggle").onclick=function(){ on=!on; this.textContent=on?"Pause covering":"Start spoken covering"; if(on) speak(LINES[i%LINES.length]); else speechSynthesis.cancel(); };
+setInterval(()=>{ i++; show(); if(on) speak(LINES[i%LINES.length]); }, 22000);
+show();
+</script>
+</body>
+</html>
